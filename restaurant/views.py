@@ -1,10 +1,11 @@
 from django.shortcuts import render
 from rest_framework import viewsets
 from rest_framework.permissions import IsAuthenticated
-from .serializers import UserSerializer,MenuSerializer
-from .models import Menu
+from .serializers import UserSerializer,MenuSerializer,BookingSerializer
+from .models import Menu,Booking
 from django.contrib.auth.models import User
 from rest_framework import generics
+from rest_framework import viewsets
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated
@@ -30,8 +31,13 @@ class SingleMenuItemView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Menu.objects.all()
     serializer_class = MenuSerializer
 
-@api_view()
-@permission_classes([IsAuthenticated])
+class BookingViewSet(viewsets.ModelViewSet):
+    permission_classes = [IsAuthenticated]
+    queryset = Booking.objects.all()
+    serializer_class = BookingSerializer
+
+#@api_view()
+#@permission_classes([IsAuthenticated])
 # @authentication_classes([TokenAuthentication])
-def msg(request):
-    return Response({"message":"This view is protected"})
+#def msg(request):
+#   return Response({"message":"This view is protected"})
